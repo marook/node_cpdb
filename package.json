@@ -11,5 +11,8 @@
 		"url": "git://github.com/marook/node_cpdb"
 	},
 	"dependencies": {
+	},
+	"scripts": {
+		"test": "make test"
 	}
 }
