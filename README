@@ -3,7 +3,8 @@ cpdb - crazy pili's database
 1) Introduction
 2) Features
 3) Requirements
-4) Contact
+4) Tests
+5) Contact
 
 ---------------------------------------------------------------------------
 Introduction
@@ -22,6 +23,13 @@ Requirements
 
 * DB keys must be strings
 * DB values must be serializable using JSON.stringify and JSON.parse
+
+---------------------------------------------------------------------------
+Tests
+
+Execute the tests using make:
+
+$ make test
 
 ---------------------------------------------------------------------------
 Contact
