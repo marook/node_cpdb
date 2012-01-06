@@ -1,0 +1,29 @@
+cpdb - crazy pili's database
+
+1) Introduction
+2) Features
+3) Requirements
+4) Contact
+
+---------------------------------------------------------------------------
+Introduction
+
+cpdb is a NoSQL database for node.js.
+
+---------------------------------------------------------------------------
+Features
+
+* Stores key / values pairs persistent in the file system
+* Supports transactions
+* Generate unique keys
+
+---------------------------------------------------------------------------
+Requirements
+
+* DB keys must be strings
+* DB values must be serializable using JSON.stringify and JSON.parse
+
+---------------------------------------------------------------------------
+Contact
+
+* Markus Pielmeier <markus.pielmeier@googlemail.com>

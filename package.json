@@ -1,0 +1,15 @@
+{
+	"name": "cpdb",
+	"version": "0.0.1",
+	"main": "lib/node_cpdb.js",
+	"description": "crazy pili's file data base",
+	"keywords": ["db", "database"],
+	"homepage": "https://github.com/marook/node_cpdb",
+	"author": "Markus Pielmeier <markus.pielmeier@googlemail.com>",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/marook/node_cpdb"
+	},
+	"dependencies": {
+	}
+}
