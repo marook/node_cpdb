@@ -17,9 +17,6 @@ publish: clean test
 target:
 	mkdir "$@"
 
-.PHONY: dbTestUtils_dependencies
-dbTestUtils_dependencies: test/dbTestUtils.js lib/node_cpdb.js
-
-target/latest-dbTest.js: target test/dbTest.js dbTestUtils_dependencies
+target/latest-dbTest.js: target test/dbTest.js test/dbTestUtils.js lib/node_cpdb.js
 	node test/dbTest.js
 	touch "$@"
