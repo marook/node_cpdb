@@ -3,7 +3,7 @@
 all:
 
 .PHONY: test
-test: target/latest-dbTest.js
+test: target/latest-dbTest.js target/latest-concurrencyTest.js
 
 .PHONY: clean
 clean:
@@ -19,4 +19,8 @@ target:
 
 target/latest-dbTest.js: target test/dbTest.js test/dbTestUtils.js lib/node_cpdb.js
 	node test/dbTest.js
+	touch "$@"
+
+target/latest-concurrencyTest.js: target test/concurrencyTest.js test/dbTestUtils.js lib/node_cpdb.js
+	node test/concurrencyTest.js
 	touch "$@"
