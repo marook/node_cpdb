@@ -3,8 +3,9 @@ cpdb - crazy pili's database
 1) Introduction
 2) Features
 3) Requirements
-4) Tests
-5) Contact
+4) Maintenance
+5) Tests
+6) Contact
 
 ---------------------------------------------------------------------------
 Introduction
@@ -23,6 +24,17 @@ Requirements
 
 * DB keys must be strings
 * DB values must be serializable using JSON.stringify and JSON.parse
+
+---------------------------------------------------------------------------
+Maintenance
+
+The database uses some temporary files and folders for implementing
+transactions. Sometimes these transaction data is not delete correctly. It is
+safe to manually clear the transaction data when all database instances are
+shut down.
+
+To clear the transaction data remove the transactions directory below your
+database directory.
 
 ---------------------------------------------------------------------------
 Tests
