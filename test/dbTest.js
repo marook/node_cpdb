@@ -17,13 +17,12 @@ var dbTestUtils = require('./../test/dbTestUtils.js');
 	
 		t.set(key, { value: 'hello world!' });
 
-		t.commit();
-	    })();
+		t.commit(function(){
+			// success
+			var t = db.newTransaction(true);
 
-	    (function(){
-		var t = db.newTransaction(true);
-
-		t.get(key, testSuccess, assert.fail);
+			t.get(key, testSuccess, assert.fail);
+		    }, assert.fail);
 	    })();
 
 	    ens.waitForCalls(10 * 1000);
@@ -39,14 +38,6 @@ var dbTestUtils = require('./../test/dbTestUtils.js');
 	    var value = 'value';
 
 	    var testSuccess = ens.ensureCall(test + ' testSuccess', function(){});
-
-	    (function(){
-		var t = db.newTransaction();
-
-		t.set(key, value);
-
-		t.commit();
-	    }());
 
 	    function rollbackTest(success){
 		var t = db.newTransaction();
@@ -66,11 +57,20 @@ var dbTestUtils = require('./../test/dbTestUtils.js');
 		    }, assert.fail);
 	    }
 
-	    assertValue(function(){
-		    rollbackTest(function(){
-			    assertValue(testSuccess);
-			});
-		});
+	    (function(){
+		var t = db.newTransaction();
+
+		t.set(key, value);
+
+		t.commit(function(){
+			// success
+			assertValue(function(){
+				rollbackTest(function(){
+					assertValue(testSuccess);
+				    });
+			    });
+		    }, assert.fail);
+	    }());
 
 	    ens.waitForCalls(10 * 1000);
 	});

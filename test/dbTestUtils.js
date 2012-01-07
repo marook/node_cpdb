@@ -102,7 +102,7 @@ function getEmptyDB(name, success){
 
 		    var libDB = getDB();
 
-		    success(libDB.DB(dbPath));
+		    success(libDB.DB(dbPath, assert.fail));
 
 		    return;
 		}

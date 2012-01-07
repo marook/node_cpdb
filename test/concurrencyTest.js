@@ -6,7 +6,7 @@ var assert = require('assert');
     console.log('Running ' + test);
     dbTestUtils.getEmptyDB(test, function(db){
 	    var key = 'key';
-	    var concurrentOperations = 100;
+	    var concurrentOperations = 500;
 
 	    for(var i = 0; i < concurrentOperations; ++i){
 		setTimeout(function(){
@@ -25,7 +25,10 @@ var assert = require('assert');
 
 				t.set(key, value);
 
-				t.commit();
+				t.commit(function(){
+					// success
+				    },
+				    assert.fail);
 			    }, assert.fail);
 		    }, Math.floor(50 * Math.random()));
 	    }
