@@ -115,3 +115,37 @@ var dbTestUtils = require('./../test/dbTestUtils.js');
 	    ens.waitForCalls(10 * 1000);
 	});
 }());
+
+(function(){
+    var test = "testCanNotRetriveDeletedEntries";
+    console.log('Running ' + test);
+    dbTestUtils.getEmptyDB(test, function(db){
+	    var ens = dbTestUtils.CallEnsurance();
+	    var key = 'key';
+
+	    var testSuccess = ens.ensureCall(test + ' testSuccess', function(){});
+
+	    function prepareTestData(success){
+		var t = db.newTransaction();
+
+		t.set(key, 'hello world');
+
+		t.commit(success, assert.fail);
+	    }
+
+	    prepareTestData(function(){
+		    var t = db.newTransaction();
+
+		    t.drop(key, function(){
+			    // success
+			    t.get(key, function(data){
+				    assert.equal(undefined, data);
+
+				    testSuccess();
+				}, assert.fail);
+			}, assert.fail);
+		});
+
+	    ens.waitForCalls(10 * 1000);
+	});
+}());
