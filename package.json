@@ -1,6 +1,6 @@
 {
 	"name": "cpdb",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"main": "lib/node_cpdb.js",
 	"description": "crazy pili's file data base",
 	"license": "GPL",
