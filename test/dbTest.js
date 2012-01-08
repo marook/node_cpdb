@@ -75,3 +75,26 @@ var dbTestUtils = require('./../test/dbTestUtils.js');
 	    ens.waitForCalls(10 * 1000);
 	});
 }());
+
+(function(){
+    var test = 'testDuplicateCommitFails';
+    console.log('Running ' + test);
+    dbTestUtils.getEmptyDB(test, function(db){
+	    var ens = dbTestUtils.CallEnsurance();
+
+	    var testSuccess = ens.ensureCall(test + ' testSuccess', function(){});
+
+	    (function(){
+		var t = db.newTransaction();
+
+		t.set('key', 'value');
+
+		t.commit(function(){
+			// success
+			t.commit(assert.fail, testSuccess);
+		    }, assert.fail);
+	    }());
+
+	    ens.waitForCalls(10 * 1000);
+	});
+}());
