@@ -3,9 +3,10 @@ cpdb - crazy pili's database
 1) Introduction
 2) Features
 3) Requirements
-4) Maintenance
-5) Tests
-6) Contact
+4) Example Code
+5) Maintenance
+6) Tests
+7) Contact
 
 ---------------------------------------------------------------------------
 Introduction
@@ -24,6 +25,49 @@ Requirements
 
 * DB keys must be strings
 * DB values must be serializable using JSON.stringify and JSON.parse
+
+---------------------------------------------------------------------------
+Example Code
+
+Here's some example code which stores values in a database:
+
+var db = require('cpdb').DB('path/to/my/db/directory');
+
+var trans = db.newTransaction();
+trans.set('key', { value: 'hello world!' });
+if(somethingWentReallyBad){
+	trans.rollback();
+}
+else{
+	trans.commit(function(){
+			// success
+			console.log('Data stored');
+		},
+		function(e){
+			// error
+			console.log('Error: ' + e);
+		});
+}
+
+And some more code which retrieves values from the database:
+
+var db = require('cpdb').DB('path/to/my/db/directory');
+
+var readOnly = true;
+var trans = db.newTransaction(readOnly);
+trans.get('key', function(data){
+		// success
+		if(data === undefined){
+			console.log('Nothing stored in DB');
+		}
+		else{
+			console.log('Got ' + data);
+		}
+	},
+	function(e){
+		// error
+		console.log('Error: ' + e);
+	});
 
 ---------------------------------------------------------------------------
 Maintenance
