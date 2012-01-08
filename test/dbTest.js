@@ -98,3 +98,20 @@ var dbTestUtils = require('./../test/dbTestUtils.js');
 	    ens.waitForCalls(10 * 1000);
 	});
 }());
+
+(function(){
+    var test = "testEmptyCommitIsSuccess";
+    console.log('Running ' + test);
+    dbTestUtils.getEmptyDB(test, function(db){
+	    var ens = dbTestUtils.CallEnsurance();
+	    var testSuccess = ens.ensureCall(test + ' testSuccess', function(){});
+
+	    (function(){
+		var t = db.newTransaction();
+
+		t.commit(testSuccess, assert.fail);
+	    }());
+
+	    ens.waitForCalls(10 * 1000);
+	});
+}());
