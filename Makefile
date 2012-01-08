@@ -11,7 +11,7 @@ clean:
 	find '.' -name '*~' -type f -exec rm {} \;
 
 .PHONY: publish
-publish: clean test
+publish: test
 	npm publish .
 
 target:
