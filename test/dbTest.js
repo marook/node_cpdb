@@ -176,13 +176,9 @@ var dbTestUtils = require('./../test/dbTestUtils.js');
      * this test makes sure that very long key names can be stored in the file
      * system.
      *
-     * this test has been implemented to make sure long keys don't generate long
-     * file names as there are file system limitations:
-     * - ext4: max file name length is 256 bytes [1]
-     * - xfs: max file name length is 255 bytes [2]
+     * this unit test makes sure that issue #1 [1] is fixed.
      *
-     * [1] http://en.wikipedia.org/wiki/Ext4
-     * [2] http://en.wikipedia.org/wiki/XFS
+     * [1] https://github.com/marook/node_cpdb/issues/1
      */
     var test = 'testStoreLongKey';
     console.log('Running ' + test);
