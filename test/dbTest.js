@@ -170,3 +170,42 @@ var dbTestUtils = require('./../test/dbTestUtils.js');
 	    ens.waitForCalls(10 * 1000);
 	});
 }());
+
+(function(){
+    /*
+     * this test makes sure that very long key names can be stored in the file
+     * system.
+     *
+     * this test has been implemented to make sure long keys don't generate long
+     * file names as there are file system limitations:
+     * - ext4: max file name length is 256 bytes [1]
+     * - xfs: max file name length is 255 bytes [2]
+     *
+     * [1] http://en.wikipedia.org/wiki/Ext4
+     * [2] http://en.wikipedia.org/wiki/XFS
+     */
+    var test = 'testStoreLongKey';
+    console.log('Running ' + test);
+    dbTestUtils.getEmptyDB(test, function(db){
+	    var ens = dbTestUtils.CallEnsurance();
+	    var keyPart = '___myWeirdName:/\\?&=___';
+	    var key = '';
+
+	    for(var i = 0; i < 500; ++i){
+		key += keyPart;
+	    }
+
+	    var testSuccess = ens.ensureCall(test + ' getter', function(entry){
+		});
+
+	    (function(){
+		var t = db.newTransaction();
+	
+		t.set(key, { value: 'hello world!' });
+
+		t.commit(testSuccess, assert.fail);
+	    })();
+
+	    ens.waitForCalls(10 * 1000);
+	});
+}());
