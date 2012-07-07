@@ -96,7 +96,7 @@ function getEmptyDB(name, success){
 
     function check(){
 	var dbPath = path.join('target', 'db_' + name + '_' + String(index));
-	path.exists(dbPath, function(exists){
+	fs.exists(dbPath, function(exists){
 		if(exists === false){
 		    fs.mkdirSync(dbPath, 0755);
 
